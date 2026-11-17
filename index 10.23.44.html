@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="th"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ทายสารเคมี</title>
+<link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--pk:#FFB7D5;--mt:#B8F0DC;--lv:#D9C8FF;--bt:#FFF2B3;--sk:#BFE3FF;--ink:#5B4A6B}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:'Mali',sans-serif;color:var(--ink);background:linear-gradient(160deg,#FFF0F6,#E8F6FF 60%,#F3ECFF);padding:12px;overflow-x:hidden}
+#app,#bld,#bar,#gate{max-width:680px;margin:0 auto 12px;position:relative;z-index:1}
+h1{margin:6px 0;font-size:1.7rem}h2{margin:4px 0 8px;font-size:1.2rem}p{margin:6px 0}small{opacity:.7}
+.card{background:#ffffffcc;border:3px solid #fff;border-radius:24px;padding:16px;margin-bottom:12px;box-shadow:0 6px 0 #5b4a6b1f}
+.c{text-align:center}.logo{font-size:3rem}.big{font-size:1.5rem;font-weight:700}
+.hd{text-align:center;font-weight:700;font-size:1.1rem;margin-bottom:8px}
+input{font:inherit;width:100%;max-width:340px;padding:10px 16px;margin:8px 0;border-radius:999px;border:3px solid var(--lv);background:#fff;color:var(--ink);text-align:center}
+.btn{font:inherit;font-weight:700;border:0;border-radius:999px;padding:10px 20px;margin:4px 2px;background:var(--pk);color:var(--ink);box-shadow:0 4px 0 #e89bbd;cursor:pointer;display:inline-block}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0}.btn:disabled{opacity:.5}
+.g{background:var(--mt);box-shadow:0 4px 0 #8fd6bb}.l{background:var(--lv);box-shadow:0 4px 0 #b6a0ee}.sk{background:var(--sk);box-shadow:0 4px 0 #8cc4ee}.sm{padding:5px 12px;font-size:.85rem}
+.chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:10px 0}
+.chip{background:var(--bt);border-radius:999px;padding:3px 12px;font-size:.9rem}
+.fact{background:var(--sk);border-radius:16px;padding:8px 12px;min-height:3em}
+.board{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:min(94vw,640px);margin:0 auto 12px}
+.tile{aspect-ratio:1;border-radius:20px;border:3px solid #fff;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;font:700 clamp(26px,9vw,52px) 'Mali',sans-serif;color:var(--ink);box-shadow:0 5px 0 #5b4a6b22;padding:2px;text-align:center;word-break:break-all;line-height:1.1}
+button.tile:not(:disabled){cursor:pointer}button.tile:disabled{color:var(--ink);opacity:1}
+.tile.ctr{background:var(--bt);font-size:clamp(16px,5vw,28px)}
+.tile.op{background:#fff;padding:0}.tile.op img{width:100%;height:100%;object-fit:contain}
+.tile.op b{position:absolute;top:2px;left:6px;font-size:.9rem;background:#fffc;border-radius:10px;padding:0 7px}
+.c0{background:#FFC8DD}.c1{background:#BDE0FE}.c2{background:#CDEAC0}.c3{background:#FFF1A8}.c4{background:#D9C8FF}.c5{background:#FFD6A5}.c6{background:#B8F0DC}.c7{background:#FFB7D5}
+.buzz{font:700 2rem 'Mali',sans-serif;width:min(70vw,240px);aspect-ratio:1;border-radius:50%;border:8px solid #fff;color:#fff;background:radial-gradient(circle at 35% 30%,#ffd1e6,#ff8fbe);box-shadow:0 10px 0 #e0709f;cursor:pointer;margin:6px auto;animation:pulse 1.6s infinite}
+.buzz:active{transform:translateY(8px);box-shadow:0 2px 0 #e0709f}
+.rk,.rs{display:flex;gap:8px;align-items:center;justify-content:space-between;background:#fff;border-radius:16px;padding:6px 12px;margin:5px 0;text-align:left}
+.rs em{font-style:normal;background:var(--mt);border-radius:999px;padding:2px 10px}
+.slots{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}
+.slot{aspect-ratio:1;border-radius:16px;background:var(--lv) center/cover no-repeat;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.5rem;cursor:pointer;border:3px solid #fff}
+.slot.f span{display:none}
+.tile.op{cursor:zoom-in}.tile.op .tx{font:600 clamp(8px,2.1vw,13px)/1.25 'Mali',sans-serif;padding:20px 5px 3px;overflow:hidden;word-break:normal;text-align:center}
+.fm{display:block;font-size:1.3em}.ctr small{display:block;font-size:.55em;font-weight:400}
+.cl{display:flex;gap:6px;align-items:center;margin:6px 0}.cl textarea{flex:1;font:inherit;border-radius:14px;border:3px solid var(--lv);padding:6px 10px;color:var(--ink);background:#fff;resize:vertical}
+.cl label.f{color:transparent;min-width:56px;height:44px;background-size:cover;background-position:center}
+#zm{position:fixed;inset:0;background:#5b4a6b99;z-index:9;display:flex;align-items:center;justify-content:center;padding:16px}
+#zm div{background:#fff;border-radius:24px;padding:20px;max-width:640px;max-height:90vh;overflow:auto;font-size:1.25rem;text-align:center;line-height:1.5}#zm img{max-width:100%}
+#bubs{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.bub{position:absolute;bottom:-60px;border-radius:50%;background:#ffffff99;border:2px solid #fff;animation:up linear infinite}
+@keyframes up{to{transform:translateY(-115vh)}}
+@keyframes pulse{50%{transform:scale(1.05)}}
+@media (prefers-reduced-motion:reduce){.bub,.buzz{animation:none}}
+</style></head>
+<body>
+<div id="bubs"></div>
+<div id="bar" hidden>
+ <button class="btn sk sm" onclick="tab('g')">🎮 ควบคุมเกม</button>
+ <button class="btn sk sm" onclick="tab('b')">🧪 สร้างคำถาม</button>
+ <button class="btn sm" onclick="reset(1)">เริ่มใหม่ (เก็บรายชื่อ)</button>
+ <button class="btn l sm" onclick="reset(0)">ล้างกระดานทั้งหมด</button>
+</div>
+<div id="gate" class="card c" hidden><div class="logo">🔐</div><h1>หน้าคุณครู</h1>
+ <input id="pw" type="password" inputmode="numeric" placeholder="รหัสผ่าน" onkeydown="event.key=='Enter'&&login()"><br>
+ <button class="btn" onclick="login()">เข้าสู่ระบบ</button></div>
+<div id="app"></div>
+<div id="bld" hidden></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
+<script>
+// ===== 1) ใส่ค่า Firebase ของคุณตรงนี้ =====
+const FB={apiKey:"YOUR_API_KEY",authDomain:"YOUR_PROJECT.firebaseapp.com",databaseURL:"https://YOUR_PROJECT-default-rtdb.firebaseio.com",projectId:"YOUR_PROJECT",appId:"YOUR_APP_ID"};
+// ==========================================
+const PASS='366282',MAX=100,LOBBY_MS=300000;
+firebase.initializeApp(FB);
+const db=firebase.database(),R=db.ref('chemGuess'),TS=firebase.database.ServerValue.TIMESTAMP;
+const $=s=>document.querySelector(s);
+const H=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const isHost=new URLSearchParams(location.search).has('host');
+let S={phase:'lobby'},P={},B={},RES={},A=null,Q=[],imgs=[],me=null,buzzed=false,authed=false,busy=false,lk='',rq,off=0;
+db.ref('.info/serverTimeOffset').on('value',s=>off=s.val()||0);
+const now=()=>Date.now()+off;
+const nOpen=()=>Object.values(S.tiles||{}).filter(Boolean).length;
+const isImg=s=>/^data:image/.test(s||''),AT=s=>H(s).replace(/\n/g,' ');
+const AN=s=>{const[a,...b]=String(s||'').split('\n');return `<b class="fm">${H(a)}</b>`+(b.length?`<small>${H(b.join(' '))}</small>`:'')};
+function zoom(i){const v=(S.tiles||{})[i];if(!v)return;const z=document.createElement('div');z.id='zm';z.onclick=()=>z.remove();z.innerHTML='<div>'+(isImg(v)?`<img src="${v}" alt="">`:`<b>${i+1}.</b> ${H(v)}`)+'</div>';document.body.appendChild(z)}
+const FACTS=['เกลือแกง NaCl เกิดจากโลหะโซเดียมที่ไวมาก กับแก๊สคลอรีนที่เป็นพิษ แต่รวมกันแล้วกินได้! 🧂','น้ำ H₂O มีไฮโดรเจน 2 อะตอม กับออกซิเจน 1 อะตอม 💧','ฮีเลียมเบากว่าอากาศ เลยทำให้บอลลูนลอยได้ 🎈','เพชรกับไส้ดินสอเป็นธาตุคาร์บอนเหมือนกัน แค่จัดเรียงอะตอมต่างกัน ✏️💎'];
+
+// ---------- ฟองสบู่พื้นหลัง ----------
+for(let i=0;i<14;i++){const b=document.createElement('i');b.className='bub';const z=14+Math.random()*34;b.style.cssText=`left:${Math.random()*100}%;width:${z}px;height:${z}px;animation-duration:${9+Math.random()*10}s;animation-delay:-${Math.random()*14}s`;$('#bubs').appendChild(b)}
+
+// ---------- ส่วนที่ใช้ร่วมกัน ----------
+const render=()=>{clearTimeout(rq);rq=setTimeout(_render,30)};
+R.child('state').on('value',s=>{S=s.val()||{phase:'lobby'};if(isHost&&authed&&S.phase=='lobby'&&!S.lobbyEnd)more();render()});
+R.child('players').on('value',s=>{P=s.val()||{};render()});
+R.child('results').on('value',s=>{RES=s.val()||{};render()});
+
+function board(click,ctr){const T=S.tiles||{};let h='<div class="board">';
+ [0,1,2,3,'c',4,5,6,7].forEach(i=>{
+  if(i==='c')h+=`<div class="tile ctr">${ctr}</div>`;
+  else if(T[i])h+=`<div class="tile op" onclick="zoom(${i})">${isImg(T[i])?`<img src="${T[i]}" alt="">`:`<span class="tx">${H(T[i])}</span>`}<b>${i+1}</b></div>`;
+  else h+=`<button class="tile c${i}" ${click?`onclick="${click}(${i})"`:'disabled'}>${i+1}</button>`});
+ return h+'</div>'}
+function lobby(host){const n=Object.keys(P).length;
+ return `<div class="card c"><div class="logo">⚗️</div><h1>${host?'ห้องรอผู้เล่น':'รอเพื่อน ๆ ก่อนนะ'}</h1>
+ <p>เกมเริ่มใน <b id="cd" class="big">--:--</b></p>
+ <div class="chips">${Object.values(P).map(p=>`<span class="chip">${H(p.name)}</span>`).join('')||'<small>ยังไม่มีใครเข้ามา</small>'}</div>
+ <p><b>${n}</b>/${MAX} คน</p><p id="fact" class="fact"></p>
+ ${host?`<button class="btn g" onclick="startGame()">▶ เริ่มเกมเลย</button><button class="btn l" onclick="more()">นับ 5 นาทีใหม่</button>`:''}</div>`}
+function endView(){const n=S.total||0;let l='';
+ for(let i=0;i<n;i++){const r=RES[i]||{};l+=`<div class="rs"><b>ข้อ ${i+1}</b><span>${AT(r.ans)}</span><em>${r.name?'🏆 '+H(r.name):'ไม่มีผู้ชนะ'}</em></div>`}
+ return `<div class="card c"><div class="logo">🎓🧪✨</div><h1>จบเกมแล้ว!</h1><p>ขอบคุณทุกคนที่มาร่วมสนุกในห้องแล็บนะ</p>
+ <p class="fact">ผู้ชนะแต่ละข้อมารับรางวัลได้เลย 🎁</p>${l}</div>`}
+
+// ---------- ฝั่งนักเรียน ----------
+function stuView(){
+ if(!me)return `<div class="card c"><div class="logo">🧪</div><h1>ทายสารเคมี</h1><p>พิมพ์ชื่อเล่นเพื่อเข้าห้องแล็บ</p>
+  <input id="nm" maxlength="12" placeholder="ชื่อเล่นของเธอ" onkeydown="event.key=='Enter'&&join()"><br><button class="btn" onclick="join()">เข้าห้อง ✨</button></div>`;
+ const ph=S.phase;
+ if(ph=='lobby')return lobby(false);
+ if(ph=='end')return endView();
+ const mine=S.turn==me;
+ let h=`<div class="hd">ข้อ ${S.qi+1}/${S.total}</div>`+board(ph=='pick'&&mine?'pk':'',ph=='won'?AN(S.ans):'❓'),m;
+ if(ph=='buzz')m=(S.banned&&S.banned[me])?'<p>รอบนี้พักก่อนนะ ให้เพื่อนคนอื่นลุ้นบ้าง 🌸</p>':buzzed?'<p class="big">กดแล้ว! ⏳</p><p>รอคุณครูประกาศผลนะ</p>':'<button class="buzz" onclick="buzz()">กดเลย!</button>';
+ else if(ph=='pick')m=mine?'<p class="big">เธอกดไวที่สุด! 🎉</p><p>เลือกแผ่นป้ายมา 1 แผ่นเลย</p>':`<p>รอ <b>${H(S.tname)}</b> เลือกแผ่นป้าย…</p>`;
+ else if(ph=='answer')m=mine?'<p class="big">ตาเธอตอบแล้ว!</p><p>ตอบครูด้วยปากได้เลย หรือพิมพ์ตรงนี้</p><input id="ai" maxlength="40" placeholder="คำตอบ"><br><button class="btn" id="sb" onclick="send()">ส่งคำตอบ</button>':`<p><b>${H(S.tname)}</b> กำลังตอบอยู่…</p>`;
+ else m=S.tname?`<p class="big">🎉 ${H(S.tname)} ตอบถูก!</p>`:'<p class="big">เฉลยแล้ว!</p>';
+ return h+`<div class="card c">${m}</div>`}
+async function join(){
+ const name=($('#nm').value||'').trim().slice(0,12);if(!name)return;
+ const c=await R.child('count').transaction(v=>(v||0)<MAX?(v||0)+1:undefined);
+ if(!c.committed){alert('ห้องเต็มแล้ว (สูงสุด '+MAX+' คน)');return}
+ const id=R.child('players').push().key;
+ await R.child('players/'+id).set({name,t:TS});
+ setMe(id);try{localStorage.cgPid=id}catch(e){}}
+function setMe(id){me=id;buzzed=false;
+ R.child('buzz/'+id).on('value',s=>{buzzed=s.exists();render()});
+ R.child('players/'+id).on('value',s=>{if(!s.exists()&&me){me=null;buzzed=false;try{localStorage.removeItem('cgPid')}catch(e){}render()}});
+ render()}
+function buzz(){if(buzzed||S.phase!='buzz')return;buzzed=true;R.child('buzz/'+me).set(TS);render()}
+function pk(i){R.child('pickReq').set({i,pid:me})}
+function send(){const t=($('#ai').value||'').trim();if(!t)return;R.child('ans').set({pid:me,t});$('#sb').textContent='ส่งแล้ว ✓'}
+
+// ---------- ฝั่งคุณครู ----------
+const rank=()=>{const ban=S.banned||{};return Object.entries(B).filter(([p])=>P[p]&&!ban[p]).sort((a,b)=>a[1]-b[1]).slice(0,10)};
+function hostView(){
+ const ph=S.phase,q=Q[S.qi];
+ if(ph=='lobby')return lobby(true);
+ if(ph=='end')return endView();
+ let h=`<div class="hd">ข้อ ${S.qi+1}/${S.total}</div>`+board(ph=='pick'?'tpick':'',`<small>คำตอบ</small>${q?AN(q.ans):'?'}`);
+ if(ph=='buzz'){const r=rank();
+  h+=`<div class="card"><h2>คนกดไวที่สุด 10 อันดับ</h2>${r.length?r.map(([p,t],i)=>`<div class="rk"><span>${i+1}. ${H(P[p].name)}</span><small>${i?'+'+((t-r[0][1])/1000).toFixed(3)+' วิ':'เร็วสุด!'}</small><button class="btn sm" onclick="give('${p}')">ให้สิทธิ์</button></div>`).join(''):'<p>รอนักเรียนกดปุ่ม…</p>'}
+  <button class="btn g" ${r.length?'':'disabled'} onclick="give('${r.length?r[0][0]:''}')">ให้สิทธิ์อันดับ 1</button><button class="btn l" onclick="skip()">เฉลย/ข้ามข้อ</button></div>`}
+ else if(ph=='pick')h+=`<div class="card c"><p>รอ <b>${H(S.tname)}</b> เลือกแผ่นป้าย<br><small>หรือกดแผ่นป้ายแทนนักเรียนได้เลย</small></p><button class="btn l" onclick="skip()">เฉลย/ข้ามข้อ</button></div>`;
+ else if(ph=='answer')h+=`<div class="card c"><p class="big">${H(S.tname)} กำลังตอบ</p>${A&&A.pid==S.turn?`<p>พิมพ์มาว่า: <b>${H(A.t)}</b></p>`:''}<button class="btn g" onclick="ok()">✅ ถูก</button><button class="btn" onclick="bad()">❌ ผิด</button><button class="btn l" onclick="skip()">เฉลย/ข้ามข้อ</button></div>`;
+ else h+=`<div class="card c"><p class="big">${S.tname?'🎉 '+H(S.tname)+' ตอบถูก!':'เฉลยแล้ว'}</p><button class="btn g" onclick="nextQ()">${S.qi+1>=S.total?'ดูสรุปผล 🏁':'ข้อต่อไป ▶'}</button></div>`;
+ return h}
+async function loadQ(){const s=await R.child('questions').once('value');Q=[];s.forEach(c=>{Q.push({id:c.key,...c.val()})});Q.sort((a,b)=>a.n-b.n);listQ()}
+const more=()=>R.child('state').update({lobbyEnd:now()+LOBBY_MS});
+async function startGame(auto){
+ await loadQ();
+ if(!Q.length){if(!auto)alert('ยังไม่มีคำถาม ไปที่แท็บ "สร้างคำถาม" ก่อนนะคะ');return more()}
+ return R.update({buzz:null,ans:null,pickReq:null,results:null,state:{phase:'buzz',round:1,qi:0,total:Q.length}})}
+function nextQ(){const qi=S.qi+1;
+ if(qi>=Q.length)return R.child('state').set({phase:'end',total:Q.length});
+ return R.update({buzz:null,ans:null,pickReq:null,state:{phase:'buzz',round:1,qi,total:Q.length}})}
+function give(pid){if(!pid||!P[pid])return;
+ R.update({ans:null,pickReq:null,'state/phase':nOpen()>=8?'answer':'pick','state/turn':pid,'state/tname':P[pid].name})}
+function openTile(i){const q=Q[S.qi];if(!q||S.phase!='pick'||(S.tiles||{})[i])return;
+ R.update({['state/tiles/'+i]:q.imgs[i],'state/phase':'answer',pickReq:null})}
+const tpick=openTile;
+function ok(){const q=Q[S.qi];R.update({['results/'+S.qi]:{name:S.tname,ans:q.ans},'state/phase':'won','state/ans':q.ans})}
+function bad(){let b=Object.assign({},S.banned||{});b[S.turn]=1;
+ const use=Object.keys(P).length>20;if(use&&Object.keys(P).every(p=>b[p]))b={};
+ R.update({buzz:null,ans:null,pickReq:null,'state/phase':'buzz','state/round':(S.round||1)+1,'state/turn':null,'state/tname':null,'state/banned':use?b:null})}
+function skip(){const q=Q[S.qi];if(!confirm('เฉลยและจบข้อนี้เลยไหมคะ?'))return;
+ R.update({['results/'+S.qi]:{name:'',ans:q.ans},'state/phase':'won','state/ans':q.ans,'state/tname':null})}
+function reset(keep){if(!confirm(keep?'เริ่มเกมใหม่โดยเก็บรายชื่อนักเรียนไว้ใช่ไหมคะ?':'ล้างกระดานทั้งหมด (รวมรายชื่อนักเรียน) ใช่ไหมคะ?'))return;
+ const u={buzz:null,ans:null,pickReq:null,results:null,state:{phase:'lobby',lobbyEnd:now()+LOBBY_MS}};
+ if(!keep){u.players=null;u.count=null}R.update(u)}
+
+// ---------- สร้างคำถาม ----------
+const SEED=[
+['NaCl','โซเดียมคลอไรด์ (Sodium Chloride)',['ของแข็งผลึกสีขาวที่อุณหภูมิห้อง','พบได้ทั่วไปในแหล่งแร่เกลือหรือละลายอยู่ในน้ำทะเล','สังเคราะห์ได้จากปฏิกิริยาสะเทินระหว่างกรดแก่และเบสแก่','ทำให้เกิดสารละลายที่สามารถนำไฟฟ้าได้','เป็นเครื่องปรุงรสและสารกันบูดที่ใช้กันทั่วไปในการปรุงอาหาร','ละลายได้ดีในน้ำ แต่ไม่ละลายในตัวทำละลายที่ไม่มีขั้ว','ผ่านกระบวนการอิเล็กโทรลิซิสด้วยวิธี Downs เพื่อผลิตคลอรีนอิสระและโลหะ','ให้สีเหลืองสว่างในการทดสอบเปลวไฟ']],
+['CuSO₄','คอปเปอร์(II) ซัลเฟต (Copper(II) Sulfate)',['ของแข็งผลึกสีฟ้าสดใส เป็นรูปแบบไฮเดรตที่พบมากที่สุด','รูปแบบปราศจากน้ำเป็นของแข็งสีขาว แต่จะเปลี่ยนเป็นสีฟ้าทันทีเมื่อสัมผัสน้ำ','ผลิตได้จากปฏิกิริยาระหว่างโลหะทองแดงกับกรดซัลฟิวริก','สารละลายในน้ำเป็นสีฟ้าเข้มและสามารถนำไฟฟ้าได้ดีมาก','ใช้เป็นสารกำจัดเชื้อรา (fungicide) และสารกำจัดตะไคร่น้ำ (algaecide)','มีความสามารถในการดูดความชื้นสูง (hygroscopic)','สารละลายในน้ำของมันทำปฏิกิริยากับแบเรียมไนเตรตได้ตะกอนสีขาวที่ไม่ละลายในกรดแก่','ให้เปลวไฟสีเขียว-ฟ้าในการทดสอบเปลวไฟ']],
+['I₂','ไอโอดีน (Iodine)',['เป็นของแข็งที่มีลักษณะเป็นผลึกสีเทาเข้มเกือบดำ มีเงาแบบโลหะ','สามารถระเหิด (sublimation) เป็นแก๊สสีม่วงได้เมื่อได้รับความร้อนโดยตรง','ละลายได้น้อยมากในน้ำ แต่ละลายได้ดีในตัวทำละลายอินทรีย์','ทำปฏิกิริยากับแป้ง (starch solution) แล้วได้สีน้ำเงินเข้มหรือม่วงเข้ม','เป็นสารอาหารที่จำเป็นสำหรับการผลิตฮอร์โมนของต่อมไทรอยด์','สารละลายในแอลกอฮอล์มักใช้เป็นยาฆ่าเชื้อโรคภายนอก (tincture)','สารละลายของมันในตัวทำละลายไม่มีขั้ว เช่น ไซโคลเฮกเซน ให้สีม่วงเข้ม ในขณะที่ในตัวทำละลายมีขั้ว เช่น เอทานอล ให้สีน้ำตาลเข้ม','ผลิตได้จากการทำปฏิกิริยาระหว่างสารละลายไอโอไดด์กับตัวออกซิไดซ์อย่างคลอรีน']],
+['P₄O₁₀','ฟอสฟอรัสเพนทอกไซด์ (Phosphorus Pentoxide)',['เป็นของแข็งผลึกสีขาวที่มีโครงสร้างโมเลกุล','เป็นสารทำให้แห้งที่มีประสิทธิภาพสูง (hygroscopic)','ทำปฏิกิริยาอย่างรุนแรงกับน้ำแล้วสร้างความร้อนสูง','ผลิตภัณฑ์สุดท้ายจากปฏิกิริยากับน้ำคือกรดฟอสฟอริก','โมเลกุลมีโครงสร้างแบบกรง (cage structure) ที่ซับซ้อน','มักเรียกชื่อตามสูตรอย่างง่าย (empirical formula) P₂O₅','ใช้ในการขจัดน้ำ (dehydration) ของสารประกอบอินทรีย์','ไม่ละลายในตัวทำละลายที่ไม่มีขั้ว เช่น เบนซีน']],
+['NH₃','แอมโมเนีย (Ammonia)',['เป็นแก๊สไม่มีสีที่มีกลิ่นฉุนรุนแรงและเป็นเอกลักษณ์','ละลายได้ดีมากในน้ำ เกิดเป็นสารละลายที่มีฤทธิ์เบสอ่อน','สังเคราะห์ได้ในระดับอุตสาหกรรมผ่านกระบวนการฮาเบอร์-บอช (Haber-Bosch process)','เป็นวัตถุดิบสำคัญในการผลิตปุ๋ยไนโตรเจน เช่น ยูเรีย (Urea)','โมเลกุลมีรูปทรงเรขาคณิตแบบพีระมิดฐานสามเหลี่ยม (Trigonal Pyramidal)','มีความสามารถในการเกิดพันธะไฮโดรเจนสูง ทำให้น้ำยาทำความสะอาดบางชนิดมีกลิ่น','สามารถทำหน้าที่เป็นลิแกนด์ (ligand) ในการเกิดสารประกอบเชิงซ้อน','มีสมบัติเป็นตัวรีดิวซ์ (reducing agent) ในปฏิกิริยาเคมีบางชนิด']],
+['CO₂','คาร์บอนไดออกไซด์ (Carbon Dioxide)',['เป็นแก๊สไม่มีสีและไม่มีกลิ่นที่อุณหภูมิห้อง แต่มีความหนาแน่นสูงกว่าอากาศ','โมเลกุลมีรูปร่างเป็นเส้นตรง (Linear) และมีมุมพันธะ 180° เนื่องจากอะตอมกลางไม่มีอิเล็กตรอนคู่โดดเดี่ยว','แม้พันธะระหว่างอะตอมจะมีขั้ว แต่ตัวโมเลกุลรวมมีสภาพขั้วเป็นศูนย์ (Non-polar molecule) เนื่องจากหักล้างกันหมด','เมื่อละลายน้ำจะทำปฏิกิริยาเกิดเป็นกรดอ่อน (H₂CO₃) ทำให้เปลี่ยนสีกระดาษลิตมัสได้','ในสถานะของแข็งถูกเรียกว่า “น้ำแข็งแห้ง” (Dry Ice) และสามารถระเหิดกลายเป็นแก๊สโดยตรงที่ความดันบรรยากาศปกติ','เป็นผลิตภัณฑ์หลักที่ได้จากการเผาไหม้แบบสมบูรณ์ของสารประกอบไฮโดรคาร์บอน','ใช้เป็นวัตถุดิบสำคัญในกระบวนการสังเคราะห์ด้วยแสงของพืชเพื่อเปลี่ยนเป็นน้ำตาลกลูโคส','เมื่อผ่านแก๊สนี้ลงในสารละลายน้ำปูนใส (Ca(OH)₂) จะเกิดตะกอนสีขาว (CaCO₃) ทำให้สารละลายขุ่น']],
+['H₂O','น้ำ (Water / Dihydrogen Monoxide)',['โมเลกุลมีรูปร่างเป็นมุมงอ (Bent / V-shaped) มีมุมพันธะประมาณ 104.5° เนื่องจากมีอิเล็กตรอนคู่โดดเดี่ยว 2 คู่ที่อะตอมกลาง','เป็นโมเลกุลมีขั้ว (Polar molecule) ที่มีสภาพขั้วสูงมาก เนื่องจากผลต่างของสภาพไฟฟ้าลบ (Electronegativity) ระหว่างธาตุองค์ประกอบ','มีจุดเดือดและจุดหลอมเหลวสูงผิดปกติเมื่อเทียบกับไฮไดรด์อื่นในหมู่เดียวกัน เนื่องจากการเกิดพันธะไฮโดรเจนระหว่างโมเลกุล','มีความหนาแน่นสูงสุดที่ประมาณ 4°C และในสถานะของแข็ง (น้ำแข็ง) มีความหนาแน่นน้อยกว่าของเหลวเพราะโครงสร้างผลึกขยายตัว','มีสมบัติเป็นสารแอมโฟเทอริก (Amphoteric / Amphiprotic) สามารถทำหน้าที่เป็นได้ทั้งกรดและเบสตามทฤษฎีของบรอนสเตด-โลวรี','เมื่อทำปฏิกิริยากับออกไซด์ของโลหะ (Metal oxide) จะได้สารละลายเบส และทำปฏิกิริยากับออกไซด์ของอโลหะจะได้สารละลายกรด','เป็นตัวทำละลายสากลที่ยอดเยี่ยมสำหรับสารไอออนิกและสารมีขั้ว โดยสามารถล้อมรอบไอออนด้วยกระบวนการไฮเดรชัน (Hydration)','เป็นผลิตภัณฑ์หลักที่เกิดจากปฏิกิริยาสะเทิน (Neutralization) ระหว่างกรดกับเบส หรือการเผาไหม้เชื้อเพลิงไฮโดรคาร์บอนแบบสมบูรณ์']],
+['NaOH','โซเดียมไฮดรอกไซด์ / โซดาไฟ (Sodium Hydroxide / Caustic Soda)',['เป็นของแข็งสีขาว มีลักษณะเป็นเกล็ด เม็ด หรือแท่ง และมีสมบัติในการดูดความชื้นสูงจนสามารถละลายกลายเป็นของเหลวได้เองในอากาศ (Deliquescent)','เมื่อละลายน้ำจะคายความร้อนออกมาอย่างรุนแรงและรวดเร็ว เนื่องจากมีค่าพลังงานไฮเดรชันสูงมาก','เป็นเบสแก่ (Strong base) ที่สามารถแตกตัวเป็นไอออนในน้ำได้ 100% ให้ไอออนไฮดรอกไซด์ (OH⁻) ความเข้มข้นสูง','รู้จักกันในชื่อทางการค้าว่า “โซดาไฟ” (Caustic Soda) เป็นสารเคมีพื้นฐานสำคัญที่ใช้ในอุตสาหกรรมกระดาษ สิ่งทอ และการผลิตผงซักฟอก','ทำปฏิกิริยากับไขมันหรือน้ำมันในกระบวนการสะปอนิฟิเคชัน (Saponification) เพื่อผลิตสบู่และกลีเซอรอล','เมื่อตั้งทิ้งไว้ในอากาศจะทำปฏิกิริยากับแก๊สคาร์บอนไดออกไซด์ กลายเป็นแผ่นเคลือบของโซเดียมคาร์บอเนต (Na₂CO₃)','มีฤทธิ์กัดกร่อนรุนแรง (Corrosive) สามารถกัดกร่อนเนื้อเยื่อและทำปฏิกิริยากับโลหะบางชนิด เช่น อลูมิเนียมและสังกะสี พร้อมทั้งปลดปล่อยแก๊สไฮโดรเจนออกมา','มักใช้เป็นสารละลายมาตรฐานทุติยภูมิ (Secondary standard) ในห้องปฏิบัติการสำหรับการไทเทรตกรด-เบส']],
+['HCl','ไฮโดรเจนคลอไรด์ / กรดไฮโดรคลอริก (Hydrogen Chloride / Hydrochloric Acid)',['ในสถานะแก๊สไม่มีสี มีกลิ่นฉุนและรุนแรงมาก และมีความสามารถในการละลายน้ำได้สูงมากจนเกิดควันขาวในอากาศชื้น','จัดเป็นกรดแก่ (Strong Acid) ที่สามารถแตกตัวให้ไอออนในน้ำได้ 100% ให้ไฮโดรเนียมไอออน (H₃O⁺) ความเข้มข้นสูง','เป็นโมเลกุลโคเวเลนต์ที่มีสภาพขั้วสูงมาก (Polar Molecule) เนื่องจากผลต่างของค่าอิเล็กโทรเนกาติวิตีระหว่างธาตุองค์ประกอบมีค่ามาก','มักใช้ในกระบวนการทางอุตสาหกรรมที่เรียกว่า “Pickling” เพื่อกำจัดคราบสนิมหรือออกไซด์ของโลหะก่อนนำไปชุบหรือเคลือบผิว','เป็นส่วนประกอบหลักของกรดในกระเพาะอาหาร (Gastric Acid) ในร่างกายมนุษย์ ทำหน้าที่สร้างสภาวะกรดเพื่อช่วยในการย่อยโปรตีนและฆ่าเชื้อโรค','เมื่อทำปฏิกิริยากับสารละลายซิลเวอร์ไนเตรต (AgNO₃) จะให้ตะกอนสีขาวของ AgCl ซึ่งไม่ละลายในกรดแก่','สามารถสังเคราะห์ได้จากปฏิกิริยาระหว่างเกลือแกง (NaCl) กับกรดซัลฟิวริกเข้มข้น หรือจากการรวมตัวโดยตรงของแก๊สไฮโดรเจนและคลอรีน','สารละลายเข้มข้นมีความดันไอสูงและระเหยง่าย จัดเป็นสารละลายมาตรฐานทุติยภูมิ (Secondary standard) ไม่สามารถนำมาเตรียมสารละลายมาตรฐานความเข้มข้นแน่นอนได้โดยตรง']],
+['H₂','แก๊สไฮโดรเจน (Hydrogen Gas)',['เป็นสารที่มีน้ำหนักเบาที่สุดในจักรวาล ไม่มีสี ไม่มีกลิ่น และมีความหนาแน่นน้อยที่สุดในบรรดาแก๊สทุกชนิด','เป็นโมเลกุลโคเวเลนต์ไม่มีขั้ว (Non-polar molecule) ยึดเหนี่ยวกันด้วยพันธะโคเวเลนต์เดี่ยวที่มีพลังงานพันธะสูงถึงประมาณ 436 kJ/mol','ในห้องปฏิบัติการนิยมเตรียมได้จากปฏิกิริยาระหว่างโลหะ เช่น สังกะสี (Zn) กับกรดแก่ เช่น กรดไฮโดรคลอริก','ในระดับอุตสาหกรรมขนาดใหญ่ นิยมผลิตผ่านกระบวนการ Steam Methane Reforming (SMR) หรือการแยกสลายด้วยกระแสไฟฟ้า (Electrolysis of water)','มีสมบัติเป็นตัวรีดิวซ์ที่แรง (Strong reducing agent) สามารถดึงออกซิเจนออกจากออกไซด์ของโลหะ (เช่น CuO) ให้กลายเป็นโลหะบริสุทธิ์ได้เมื่อให้ความร้อน','ติดไฟได้ดีมากและให้พลังงานความร้อนสูงเมื่อเผาไหม้กับออกซิเจน โดยมีผลิตภัณฑ์เพียงอย่างเดียวคือไอน้ำ (H₂O) จึงถูกผลักดันเป็นพลังงานทางเลือกแห่งอนาคต','เป็นธาตุเดียวในตารางธาตุที่ไอโซโทปตามธรรมชาติมีชื่อเฉพาะเจาะจงแตกต่างกันถึง 3 แบบ ได้แก่ โพรเทียม ดิวเทอเรียม และทริเทียม','ถูกนำไปใช้ในกระบวนการ Hydrogenation ทางอุตสาหกรรมอาหารเพื่อเปลี่ยนน้ำมันพืชไม่อิ่มตัวให้กลายเป็นไขมันอิ่มตัว (เช่น การผลิตเนยเทียม)']],
+['N₂','แก๊สไนโตรเจน (Nitrogen Gas)',['เป็นแก๊สหลักที่เป็นองค์ประกอบมากที่สุดในบรรยากาศของโลก (คิดเป็นสัดส่วนประมาณ 78% โดยปริมาตร) ไม่มีสี ไม่มีกลิ่น และไม่มีรส','อะตอมทั้งสองยึดเหนี่ยวกันด้วยพันธะโคเวเลนต์สาม (Triple Covalent Bond) ซึ่งมีพลังงานพันธะสูงมากถึงประมาณ 945 kJ/mol ทำให้โมเลกุลเสถียรและเฉื่อยมากที่อุณหภูมิห้อง','เป็นโมเลกุลโคเวเลนต์ไม่มีขั้ว (Non-polar molecule) เนื่องจากมีความสมมาตรสูง ทำให้ไดโพลโมเมนต์รวมมีค่าเป็นศูนย์','ในระดับอุตสาหกรรมขนาดใหญ่ นิยมแยกออกมาจากกระบวนการกลั่นลำดับส่วนของอากาศเหลว (Fractional Distillation of Liquid Air)','ในสถานะของเหลว (Liquid Nitrogen) มีอุณหภูมิต่ำมากถึงประมาณ -196°C นิยมใช้เป็นสารทำความเย็นยิ่งยวดในห้องปฏิบัติการและอุตสาหกรรมอาหาร','ใช้ประโยชน์ในการสร้างบรรยากาศเฉื่อย (Inert Atmosphere) เพื่อป้องกันการเกิดปฏิกิริยาออกซิเดชัน เช่น การบรรจุในถุงขนมขบเคี้ยวเพื่อป้องกันการเหม็นหืน','เป็นวัตถุดิบตั้งต้นที่สำคัญที่สุดในการสังเคราะห์แอมโมเนีย (NH₃) ผ่านกระบวนการฮาเบอร์-บอช (Haber-Bosch Process) เพื่อใช้ผลิตปุ๋ยเคมี','ภายใต้สภาวะที่มีพลังงานสูงมาก (เช่น เกิดฟ้าผ่าหรือในเครื่องยนต์สันดาปภายใน) สามารถทำปฏิกิริยากับออกซิเจนกลายเป็นไนตริกออกไซด์ (NO) ซึ่งเป็นสารตั้งต้นของมลพิษโฟโตเคมิคอลสม็อก']]
+];
+function buildBld(){$('#bld').innerHTML=`<div class="card"><h2>➕ เพิ่มคำถามใหม่</h2>
+ <input id="qa" placeholder="คำตอบ/สูตร เช่น NaCl">
+ <input id="qb" placeholder="ชื่อสาร (ไม่บังคับ) เช่น โซเดียมคลอไรด์">
+ <p>คำใบ้ 8 ข้อ (ตรงกับแผ่นป้ายเลข 1–8) พิมพ์ข้อความ หรือกด 📷 เพื่อใช้รูปแทนก็ได้</p>
+ <label class="btn sk sm">เลือกทีเดียว 8 รูป<input type="file" accept="image/*" multiple hidden onchange="many(this)"></label>
+ ${[0,1,2,3,4,5,6,7].map(i=>`<div class="cl"><b>${i+1}</b><textarea id="t${i}" rows="2" placeholder="พิมพ์คำใบ้ข้อ ${i+1}"></textarea><label class="btn sk sm" id="s${i}">📷<input type="file" accept="image/*" hidden onchange="one(${i},this)"></label><button class="btn l sm" onclick="clr(${i})">ล้าง</button></div>`).join('')}
+ <button class="btn g" onclick="saveQ()">บันทึกคำถาม</button></div>
+ <div class="card"><h2>คำถามทั้งหมด (<span id="qn">0</span> ข้อ)</h2><div id="ql"></div><button class="btn sk" onclick="seed()">📥 นำเข้าคำถามตัวอย่าง 11 ข้อ</button></div>`}
+function shrink(f){return new Promise((res,rej)=>{const r=new FileReader();r.onerror=rej;r.onload=()=>{const im=new Image();im.onerror=rej;
+ im.onload=()=>{const k=Math.min(1,420/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);
+  const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(im,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',.72))};
+ im.src=r.result};r.readAsDataURL(f)})}
+async function setSlot(i,f){try{const d=await shrink(f);imgs[i]=d;const s=$('#s'+i);s.style.backgroundImage=`url(${d})`;s.classList.add('f');const t=$('#t'+i);t.value='';t.disabled=true;t.placeholder='ใช้รูปแล้ว'}catch(e){alert('อ่านรูปไม่ได้ ลองรูปอื่นนะคะ')}}
+const one=(i,el)=>el.files[0]&&setSlot(i,el.files[0]);
+async function many(el){const fs=[...el.files].slice(0,8);for(let i=0;i<fs.length;i++)await setSlot(i,fs[i])}
+function clr(i){imgs[i]=null;const t=$('#t'+i);t.value='';t.disabled=false;t.placeholder='พิมพ์คำใบ้ข้อ '+(i+1);const s=$('#s'+i);s.style.backgroundImage='';s.classList.remove('f')}
+async function saveQ(){const a=$('#qa').value.trim(),b=$('#qb').value.trim();
+ if(!a)return alert('ใส่คำตอบก่อนนะคะ');
+ const cl=[];for(let i=0;i<8;i++){const v=imgs[i]||$('#t'+i).value.trim();if(!v)return alert('คำใบ้ข้อ '+(i+1)+' ยังว่างอยู่ (พิมพ์ข้อความหรือใส่รูป)');cl.push(v)}
+ try{await R.child('questions').push({n:Date.now(),ans:a+(b?'\n'+b:''),imgs:cl})}catch(e){return alert('บันทึกไม่สำเร็จ: '+e.message)}
+ for(let i=0;i<8;i++)clr(i);$('#qa').value='';$('#qb').value='';await loadQ()}
+async function seed(){if(!confirm('นำเข้าคำถามตัวอย่าง 11 ข้อ (ข้อที่มีอยู่แล้วจะไม่ซ้ำ) ใช่ไหมคะ?'))return;
+ await loadQ();const have=new Set(Q.map(q=>q.ans));let n=Date.now(),c=0;
+ for(const e of SEED){const ans=e[0]+'\n'+e[1];if(have.has(ans))continue;await R.child('questions').push({n:n++,ans,imgs:e[2]});c++}
+ await loadQ();alert('นำเข้าแล้ว '+c+' ข้อ')}
+function listQ(){const l=$('#ql');if(!l)return;$('#qn').textContent=Q.length;
+ l.innerHTML=Q.map((q,i)=>`<div class="rs"><b>ข้อ ${i+1}</b><span>${AT(q.ans)}</span><button class="btn l sm" onclick="del('${q.id}')">ลบ</button></div>`).join('')||'<small>ยังไม่มีคำถาม</small>'}
+async function del(id){if(!confirm('ลบคำถามนี้ใช่ไหมคะ?'))return;await R.child('questions/'+id).remove();await loadQ()}
+function tab(t){$('#app').hidden=t=='b';$('#bld').hidden=t=='g'}
+
+// ---------- เข้าสู่ระบบครู ----------
+function login(){if($('#pw').value!==PASS)return alert('รหัสผ่านไม่ถูกต้องค่ะ');try{sessionStorage.cgA=1}catch(e){}hostInit()}
+function hostInit(){authed=true;$('#gate').hidden=true;$('#bar').hidden=false;buildBld();loadQ();
+ R.child('buzz').on('value',s=>{B=s.val()||{};render()});
+ R.child('ans').on('value',s=>{A=s.val();render()});
+ R.child('pickReq').on('value',s=>{const v=s.val();if(v&&S.phase=='pick'&&v.pid==S.turn)openTile(v.i)});
+ if(S.phase=='lobby'&&!S.lobbyEnd)more();render()}
+
+// ---------- วาดหน้าจอ ----------
+function _render(){const a=$('#app');
+ if(isHost){if(authed)a.innerHTML=hostView();return}
+ const k=JSON.stringify([me,S.phase,S.round,S.turn,S.qi,nOpen(),buzzed,S.ans,S.lobbyEnd,S.phase=='lobby'?Object.keys(P).length:0,!!(S.banned&&S.banned[me]),S.phase=='end'?RES:0]);
+ if(k===lk)return;lk=k;a.innerHTML=stuView()}
+setInterval(()=>{
+ const el=$('#cd');if(el&&S.lobbyEnd){const t=Math.max(0,Math.ceil((S.lobbyEnd-now())/1000));el.textContent=Math.floor(t/60)+':'+String(t%60).padStart(2,'0')}
+ const f=$('#fact');if(f)f.textContent='รู้ไหมว่า… '+FACTS[Math.floor(Date.now()/7000)%FACTS.length];
+ if(isHost&&authed&&!busy&&S.phase=='lobby'&&S.lobbyEnd&&now()>=S.lobbyEnd){busy=true;(Object.keys(P).length?startGame(true):more()).finally(()=>busy=false)}
+},500);
+
+// ---------- เริ่มต้น ----------
+if(isHost){let ok=false;try{ok=sessionStorage.cgA=='1'}catch(e){}ok?hostInit():$('#gate').hidden=false}
+else{let id=null;try{id=localStorage.cgPid}catch(e){}
+ if(id)R.child('players/'+id).once('value').then(s=>s.exists()?setMe(id):render());else render()}
+</script>
+</body></html>
